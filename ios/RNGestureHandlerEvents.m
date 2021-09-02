@@ -62,6 +62,7 @@
 
 + (RNGestureHandlerEventExtraData *)forForce:(CGFloat)force
                                  forPosition:(CGPoint)position
+                                 forRadius:(CGFloat)radius
                         withAbsolutePosition:(CGPoint)absolutePosition
                          withNumberOfTouches:(NSUInteger)numberOfTouches
 {
@@ -69,6 +70,7 @@
             initWithData:@{
                            @"x": @(position.x),
                            @"y": @(position.y),
+                           @"radius": @(radius),
                            @"absoluteX": @(absolutePosition.x),
                            @"absoluteY": @(absolutePosition.y),
                            @"force": @(force),

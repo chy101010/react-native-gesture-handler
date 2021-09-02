@@ -9,6 +9,7 @@
 @property (nonatomic) CGFloat maxForce;
 @property (nonatomic) CGFloat minForce;
 @property (nonatomic) CGFloat force;
+@property (nonatomic) CGFloat radius;
 @property (nonatomic) BOOL feedbackOnActivation;
 
 - (id)initWithGestureHandler:(RNGestureHandler*)gestureHandler;
@@ -21,6 +22,7 @@
 }
 
 static const CGFloat defaultForce = 0;
+static const CGFloat defaultRadius = 0;
 static const CGFloat defaultMinForce = 0.2;
 static const CGFloat defaultMaxForce = NAN;
 static const BOOL defaultFeedbackOnActivation = NO;
@@ -30,6 +32,7 @@ static const BOOL defaultFeedbackOnActivation = NO;
   if ((self = [super initWithTarget:gestureHandler action:@selector(handleGesture:)])) {
     _gestureHandler = gestureHandler;
     _force = defaultForce;
+    _radius = defaultRadius;
     _minForce = defaultMinForce;
     _maxForce = defaultMaxForce;
     _feedbackOnActivation = defaultFeedbackOnActivation;
@@ -45,6 +48,7 @@ static const BOOL defaultFeedbackOnActivation = NO;
   }
   [super touchesBegan:touches withEvent:event];
   _firstTouch = [touches anyObject];
+  _radius = _firstTouch.majorRadius;
   [self handleForceWithTouches:touches];
   self.state = UIGestureRecognizerStatePossible;
 }
@@ -110,6 +114,7 @@ static const BOOL defaultFeedbackOnActivation = NO;
 - (void)reset {
   [super reset];
   _force = 0;
+  _radius = 0;
   _firstTouch = NULL;
 }
 
@@ -154,6 +159,7 @@ static const BOOL defaultFeedbackOnActivation = NO;
   return [RNGestureHandlerEventExtraData
           forForce: recognizer.force
           forPosition:[recognizer locationInView:recognizer.view]
+          forRadius: recognizer.radius
           withAbsolutePosition:[recognizer locationInView:recognizer.view.window]
           withNumberOfTouches:recognizer.numberOfTouches];
 }
