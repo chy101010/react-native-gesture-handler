@@ -34,6 +34,7 @@ export type ForceTouchGestureHandlerEventPayload = {
    * The pressure of a touch.
    */
   force: number;
+  radius: number,
 };
 
 export interface ForceTouchGestureHandlerProps
