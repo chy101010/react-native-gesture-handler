@@ -47,10 +47,10 @@ static const BOOL defaultFeedbackOnActivation = NO;
     return;
   }
   [super touchesBegan:touches withEvent:event];
-  _firstTouch = [touches anyObject];
   _radius = _firstTouch.majorRadius;
+  _firstTouch = [touches anyObject];
   [self handleForceWithTouches:touches];
-  self.state = UIGestureRecognizerStatePossible;
+  self.state = UIGestureRecognizerStateBegan;
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
