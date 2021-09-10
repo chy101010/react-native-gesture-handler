@@ -1,6 +1,6 @@
 {
   "name": "@biosensics/react-native-gesture-handler-force-radius-extension",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Experimental implementation of a new declarative API for gesture handling in react-native",
   "scripts": {
     "prepare": "bob build",
