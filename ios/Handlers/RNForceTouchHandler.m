@@ -61,6 +61,7 @@ static const BOOL defaultFeedbackOnActivation = NO;
   }
   [super touchesMoved:touches withEvent:event];
   
+  _radius = _firstTouch.majorRadius;
   [self handleForceWithTouches:touches];
   
   if ([self shouldFail]) {
