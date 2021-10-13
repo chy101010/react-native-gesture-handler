@@ -63,8 +63,8 @@ export type ForceTouchGestureHandler = typeof ForceTouchGestureHandler & {
   forceTouchAvailable: boolean;
 };
 // eslint-disable-next-line @typescript-eslint/no-redeclare -- backward compatibility; see description on the top of gestureHandlerCommon.ts file
-export const ForceTouchGestureHandler = PlatformConstants?.forceTouchAvailable
-  ? createHandler<
+export const ForceTouchGestureHandler =
+  createHandler<
       ForceTouchGestureHandlerProps,
       ForceTouchGestureHandlerEventPayload
     >({
@@ -74,8 +74,7 @@ export const ForceTouchGestureHandler = PlatformConstants?.forceTouchAvailable
         ...forceTouchGestureHandlerProps,
       ] as const,
       config: {},
-    })
-  : ForceTouchFallback;
+    });
 
 (ForceTouchGestureHandler as ForceTouchGestureHandler).forceTouchAvailable =
   PlatformConstants?.forceTouchAvailable || false;
