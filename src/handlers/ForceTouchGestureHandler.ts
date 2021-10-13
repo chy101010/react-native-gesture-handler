@@ -1,4 +1,3 @@
-import React from 'react';
 import PlatformConstants from '../PlatformConstants';
 import createHandler from './createHandler';
 import {
