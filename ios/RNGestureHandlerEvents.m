@@ -63,6 +63,8 @@
 + (RNGestureHandlerEventExtraData *)forForce:(CGFloat)force
                                  forPosition:(CGPoint)position
                                  forRadius:(CGFloat)radius
+                                 forMaxPossibleForce(CGFloat)maxPossibleForce
+                                 forRadiusTolerance(CGFloat)radiusTolerance
                         withAbsolutePosition:(CGPoint)absolutePosition
                          withNumberOfTouches:(NSUInteger)numberOfTouches
 {
@@ -71,6 +73,8 @@
                            @"x": @(position.x),
                            @"y": @(position.y),
                            @"radius": @(radius),
+                           @"maxPossibleForce": @(forMaxPossibleForce),
+                           @"radiusTolerance": @(forRadiusTolerance),
                            @"absoluteX": @(absolutePosition.x),
                            @"absoluteY": @(absolutePosition.y),
                            @"force": @(force),

@@ -1,55 +1,64 @@
+import PlatformConstants from '../PlatformConstants';
 import createHandler from './createHandler';
 import {
   BaseGestureHandlerProps,
   baseGestureHandlerProps,
 } from './gestureHandlerCommon';
 
-export const flingGestureHandlerProps = [
-  'numberOfPointers',
-  'direction',
+export const forceTouchGestureHandlerProps = [
+  'minForce',
+  'maxForce',
+  'feedbackOnActivation',
 ] as const;
 
-export type FlingGestureHandlerEventPayload = {
+export type ForceTouchGestureHandlerEventPayload = {
   x: number;
   y: number;
   absoluteX: number;
   absoluteY: number;
+  force: number;
+  radius: number;
+  maxPossibleForce: number,
+  radiusTolerance: number,
 };
 
-export interface FlingGestureHandlerProps
-  extends BaseGestureHandlerProps<FlingGestureHandlerEventPayload> {
+export interface ForceTouchGestureHandlerProps
+  extends BaseGestureHandlerProps<ForceTouchGestureHandlerEventPayload> {
   /**
-   * Expressed allowed direction of movement. It's possible to pass one or many
-   * directions in one parameter:
    *
-   * ```js
-   * direction={Directions.RIGHT | Directions.LEFT}
-   * ```
-   *
-   * or
-   *
-   * ```js
-   * direction={Directions.DOWN}
-   * ```
+   * A minimal pressure that is required before handler can activate. Should be a
+   * value from range `[0.0, 1.0]`. Default is `0.2`.
    */
-  direction?: number;
+  minForce?: number;
 
   /**
-   * Determine exact number of points required to handle the fling gesture.
+   * A maximal pressure that could be applied for handler. If the pressure is
+   * greater, handler fails. Should be a value from range `[0.0, 1.0]`.
    */
-  numberOfPointers?: number;
+  maxForce?: number;
+
+  /**
+   * Boolean value defining if haptic feedback has to be performed on
+   * activation.
+   */
+  feedbackOnActivation?: boolean;
 }
 
-export type FlingGestureHandler = typeof FlingGestureHandler;
+export type ForceTouchGestureHandler = typeof ForceTouchGestureHandler & {
+  forceTouchAvailable: boolean;
+};
 // eslint-disable-next-line @typescript-eslint/no-redeclare -- backward compatibility; see description on the top of gestureHandlerCommon.ts file
-export const FlingGestureHandler = createHandler<
-  FlingGestureHandlerProps,
-  FlingGestureHandlerEventPayload
+export const ForceTouchGestureHandler = createHandler<
+  ForceTouchGestureHandlerProps,
+  ForceTouchGestureHandlerEventPayload
 >({
-  name: 'FlingGestureHandler',
+  name: 'ForceTouchGestureHandler',
   allowedProps: [
     ...baseGestureHandlerProps,
-    ...flingGestureHandlerProps,
+    ...forceTouchGestureHandlerProps,
   ] as const,
   config: {},
 });
+
+(ForceTouchGestureHandler as ForceTouchGestureHandler).forceTouchAvailable =
+  PlatformConstants?.forceTouchAvailable || false;

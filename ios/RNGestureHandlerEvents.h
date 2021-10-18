@@ -26,6 +26,8 @@
 + (RNGestureHandlerEventExtraData *)forForce:(CGFloat)force
                                  forPosition:(CGPoint)position
                                    forRadius:(CGFloat)radius
+                                   forMaxPossibleForce:(CGFloat)maxPossibleForce
+                                   forRadiusTolerance:(CGFloat)radiusTolerance
                         withAbsolutePosition:(CGPoint)absolutePosition
                          withNumberOfTouches:(NSUInteger)numberOfTouches;
 + (RNGestureHandlerEventExtraData *)forPinch:(CGFloat)scale

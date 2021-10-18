@@ -10,6 +10,8 @@
 @property (nonatomic) CGFloat minForce;
 @property (nonatomic) CGFloat force;
 @property (nonatomic) CGFloat radius;
+@property (nonatomic) CGFloat maxPossibleForce;
+@property (nonatomic) CGFloat radiusTolerance;
 @property (nonatomic) BOOL feedbackOnActivation;
 
 - (id)initWithGestureHandler:(RNGestureHandler*)gestureHandler;
@@ -23,6 +25,8 @@
 
 static const CGFloat defaultForce = 0;
 static const CGFloat defaultRadius = 0;
+static const CGFloat defaultMaxPossibleForce = 0;
+static const CGFloat defaultRadiusTolerance = 0;
 static const CGFloat defaultMinForce = 0.2;
 static const CGFloat defaultMaxForce = NAN;
 static const BOOL defaultFeedbackOnActivation = NO;
@@ -33,6 +37,8 @@ static const BOOL defaultFeedbackOnActivation = NO;
     _gestureHandler = gestureHandler;
     _force = defaultForce;
     _radius = defaultRadius;
+    _maxPossibleForce = defaultMaxPossibleForce;
+    _radiusTolerance = defaultRadiusTolerance;
     _minForce = defaultMinForce;
     _maxForce = defaultMaxForce;
     _feedbackOnActivation = defaultFeedbackOnActivation;
@@ -48,6 +54,8 @@ static const BOOL defaultFeedbackOnActivation = NO;
   }
   [super touchesBegan:touches withEvent:event];
   _radius = _firstTouch.majorRadius;
+  _maxPossibleForce = _firstTouch.maximumPossibleForce;
+  _radiusTolerance = _firstTouch.majorRadiusTolerance;
   _firstTouch = [touches anyObject];
   [self handleForceWithTouches:touches];
   self.state = UIGestureRecognizerStateBegan;
@@ -62,6 +70,8 @@ static const BOOL defaultFeedbackOnActivation = NO;
   [super touchesMoved:touches withEvent:event];
   
   _radius = _firstTouch.majorRadius;
+  _maxPossibleForce = _firstTouch.maximumPossibleForce;
+  _radiusTolerance = _firstTouch.majorRadiusTolerance;
   [self handleForceWithTouches:touches];
   
   if ([self shouldFail]) {
@@ -116,6 +126,8 @@ static const BOOL defaultFeedbackOnActivation = NO;
   [super reset];
   _force = 0;
   _radius = 0;
+  _maxPossibleForce = 0;
+  _radiusTolerance = 0;
   _firstTouch = NULL;
 }
 
@@ -161,6 +173,8 @@ static const BOOL defaultFeedbackOnActivation = NO;
           forForce: recognizer.force
           forPosition:[recognizer locationInView:recognizer.view]
           forRadius: recognizer.radius
+          forMaxPossibleForce: recognizer.maxPossibleForce
+          forRadiusTolerance: recognizer.radiusTolerance
           withAbsolutePosition:[recognizer locationInView:recognizer.view.window]
           withNumberOfTouches:recognizer.numberOfTouches];
 }
